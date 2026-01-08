@@ -1,24 +1,33 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./star-rating.styles.css";
 
-const StarRating = ({ maxRating = 5 }) => {
-  const [rating, setRating] = useState<number>(0);
+const StarRating = ({
+  maxRating = 5,
+  onChange,
+}: {
+  maxRating?: number;
+  onChange: (rating: number) => void;
+}) => {
+  const [currentRating, setCurrentRating] = useState<number>(0);
   const [hovering, setHovering] = useState<number>(0);
 
+  useEffect(() => {
+    onChange(currentRating);
+  }, [currentRating, onChange]);
   const clickHandler = useCallback(
     (ratingValue: number) => {
-      if (ratingValue === rating) {
-        setRating(0);
+      if (ratingValue === currentRating) {
+        setCurrentRating(0);
       } else {
-        setRating(ratingValue);
+        setCurrentRating(ratingValue);
       }
     },
-    [rating]
+    [currentRating]
   );
 
   return (
     <>
-      <h3>current Rating: {rating}</h3>
+      <h3>current Rating: {currentRating}</h3>
 
       <div className="star-rating-container">
         {[...Array(maxRating)].map((_, idx: number) => {
@@ -27,13 +36,13 @@ const StarRating = ({ maxRating = 5 }) => {
             <p
               key={idx}
               className={`star ${
-                ratingValue <= (hovering || rating) ? "active" : ""
+                ratingValue <= (hovering || currentRating) ? "active" : ""
               }`}
               onClick={() => clickHandler(ratingValue)}
               onMouseEnter={() => setHovering(ratingValue)}
               onMouseLeave={() => setHovering(0)}
             >
-              {"☆"}
+              &#9733;
             </p>
           );
         })}
