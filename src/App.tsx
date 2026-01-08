@@ -7,6 +7,8 @@ function App() {
       <div>
         <h1>Hey, React</h1>
         <StarRating />
+        <StarRating maxRating={10} />
+        <StarRating maxRating={15} />
       </div>
     </>
   );
