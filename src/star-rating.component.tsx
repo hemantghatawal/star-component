@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "./star-rating.styles.css";
 
 const StarRating = ({ maxRating = 5 }) => {
   const [rating, setRating] = useState<number>(0);
   const [hovering, setHovering] = useState<number>(0);
 
-  const clickHandler = (ratingValue: number) => {
-    if (ratingValue === rating) {
-      setRating(0);
-    } else {
-      setRating(ratingValue);
-    }
-  };
+  const clickHandler = useCallback(
+    (ratingValue: number) => {
+      if (ratingValue === rating) {
+        setRating(0);
+      } else {
+        setRating(ratingValue);
+      }
+    },
+    [rating]
+  );
 
   return (
     <>
