@@ -25,8 +25,8 @@ const StarRating = () => {
           return (
             <p
               key={idx}
-              className={`star ${ratingValue <= rating ? "active" : ""} ${
-                ratingValue <= hovering ? "active" : ""
+              className={`star ${
+                ratingValue <= (hovering || rating ) ? "active" : ""
               }`}
               onClick={() => clickHandler(ratingValue)}
               onMouseEnter={() => setHovering(ratingValue)}
